@@ -1,5 +1,8 @@
+require "uri"
+require "faraday"
 module FormShui
   module Connection
+    @@api_url = ""
 
     def api_url
       @@api_url
