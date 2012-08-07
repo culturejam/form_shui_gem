@@ -15,7 +15,7 @@ module FormShui
   end
 
   # 404 Not Found
-  class ResourceNotFound < FormShuiError
+  class NotFound < FormShuiError
   end
 
   # 409 Conflict

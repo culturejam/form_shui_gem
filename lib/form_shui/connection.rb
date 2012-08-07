@@ -3,7 +3,7 @@ require 'faraday_middleware'
 Dir[File.expand_path('../../faraday/*.rb', __FILE__)].each{|f| require f}
 module FormShui
   module Connection
-    @@api_url = ""
+    @@api_url = "http://promojam.dev:4567"
 
     def api_url
       @@api_url
