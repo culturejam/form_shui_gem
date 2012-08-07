@@ -5,5 +5,6 @@ module FormShui
   autoload :Mapper, 'form_shui/mapper'
   autoload :Base, 'form_shui/base'
   autoload :Form, 'form_shui/models/form'
+  autoload :Answer, 'form_shui/models/answer'
   extend Connection
 end

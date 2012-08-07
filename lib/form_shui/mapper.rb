@@ -7,22 +7,42 @@ module FormShui
     end
 
     module ClassMethods
-      def find(*arguments)
-        id   = arguments.slice!(0)
-        options = arguments.slice!(0) || {}
-        path = "#{@@path}/#{id}"
+      def all(options = {})
+        if @@prefix
+          prefix_id = options.delete(@@prefix.to_sym)
+          path = compile_path(prefix_id)
+        end
+        path ||= @@path
         response = FormShui.api_connection.get path, options
-        doc = JSON.parse(response.body)
-        self.class_eval("new(#{doc})")
+        parse_doc(response.body)
+      end
+
+      def find(*arguments)
+        id = arguments.slice!(0)
+        options = arguments.slice!(0) || {}
+
+        if @@prefix
+          prefix_id = options.delete(:prefix)[@@prefix.to_sym]
+          path = "#{compile_path(prefix_id)}/#{id}"
+        else
+          path = "#{@@path}/#{id}"
+        end
+
+        response = FormShui.api_connection.get path, options
+        parse_doc(response.body)
       end
 
       def create(attrs = {})
-        response = FormShui.api_connection.post @@path do |request|
+        if @@prefix
+          prefix_id = attrs.delete(:prefix)[@@prefix.to_sym]
+          path = compile_path(prefix_id)
+        end
+        path ||= @@path
+        response = FormShui.api_connection.post path do |request|
           request.headers['Content-Type'] = 'application/json'
           request.body = { @@root => attrs }.to_json
         end
-        doc = JSON.parse(response.body)
-        self.class_eval("new(#{doc})")
+        parse_doc(response.body)
       end
 
       def root_param(root_param)
@@ -31,21 +51,46 @@ module FormShui
 
       def path_name(path)
         @@path = path
+        @@prefix = path.match(/(:\w+)/).to_s[1..-1]
       end
 
       def path
         @@path
       end
 
+      def prefix
+        @@prefix
+      end
+
       def root
         @@root
+      end
+
+      private
+
+      def compile_path(prefix_id)
+        @@path.gsub(/(:\w+)/, prefix_id.to_s)
+      end
+
+      def parse_doc(body)
+        doc = JSON.parse(body)
+        if doc.is_a? Array
+          doc.map{|x|  self.class_eval("new(#{x})") }
+        else
+          self.class_eval("new(#{doc})")
+        end
       end
     end
 
     module InstanceMethods
 
       def path
-        "#{self.class.path}/#{id}"
+        if self.class.prefix
+          path_name = self.class.path.gsub(/(:\w+)/, self.send(self.class.prefix))
+          "#{path_name}/#{id}"
+        else
+          "#{self.class.path}/#{id}"
+        end
       end
 
       def update(attrs = {})
