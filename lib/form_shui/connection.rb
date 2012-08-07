@@ -1,5 +1,6 @@
 require "uri"
-require "faraday"
+require 'faraday_middleware'
+Dir[File.expand_path('../../faraday/*.rb', __FILE__)].each{|f| require f}
 module FormShui
   module Connection
     @@api_url = ""
@@ -16,6 +17,8 @@ module FormShui
       @api_connection = Faraday.new(:url => @@api_url) do |faraday|
         faraday.request  :url_encoded             # form-encode POST params
         faraday.response :logger                  # log requests to STDOUT
+        faraday.response :raise_error
+        faraday.use FaradayMiddleware::RaiseHttpException
         faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
       end
       @api_connection
