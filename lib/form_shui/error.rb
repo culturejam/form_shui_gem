@@ -15,7 +15,7 @@ module FormShui
   end
 
   # 404 Not Found
-  class ResourceNotFound < FormShuiError
+  class NotFound < FormShuiError
   end
 
   # 409 Conflict
@@ -26,7 +26,11 @@ module FormShui
   class ResourceGone < FormShuiError
   end
 
-  # 5xx Server Error
-  class ServerError < FormShuiError
+  # 500 Server Error
+  class InternalServerError < FormShuiError
+  end
+
+  # 503 Server Error
+  class ServiceUnavailable < FormShuiError
   end
 end

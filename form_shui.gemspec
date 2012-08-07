@@ -16,7 +16,9 @@ Gem::Specification.new do |gem|
   gem.version       = FormShui::VERSION
 
   gem.add_dependency "faraday", "~> 0.8.1"
+  gem.add_dependency "faraday_middleware", "~> 0.8.8"
   gem.add_development_dependency "simplecov"
-  gem.add_development_dependency "rspec"
+  gem.add_development_dependency "rspec", "~> 2.11.0"
   gem.add_development_dependency "rake"
+  gem.add_development_dependency 'webmock', '~> 1.6'
 end
