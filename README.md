@@ -1,9 +1,46 @@
-# FormShui
+SocialStorm Form-Shui Gem
+==========================
 
-Client gem for form_shui form builder.
+Client gem for [Form-Shui](https://github.com/culturejam/form_shui) service.
 
-Requirements
-------------
+
+Projects in the SocialStorm Family
+====================================
+
+| Name                 | URL                                                | Description                   |
+| -------------------- | -------------------------------------------------- | ----------------------------- |
+| SocialStorm Vagrant  | https://github.com/culturejam/socialstorm-vagrant  | Vagrant project for configuring a local development environment. |
+| Management           | https://github.com/culturejam/management           | The PromoJam admin interface. |
+| Analytics            | https://github.com/culturejam/analytics            | Handles asynchronous analytics requests and provides API to retrieve analytics data. |
+| FormShui             | https://github.com/culturejam/form_shui            | Handles form builder requests and provides API to CRUD forms data. |
+| FormShui Gem         | https://github.com/culturejam/form_shui_gem        | Client gem for form_shui form builder. |
+
+
+Getting Started
+=================
+
+## Installation
+
+See installation instructions in the [socialstorm-vagrant README](https://github.com/culturejam/socialstorm-vagrant)
+
+## Other Important Info
+
+* [Developer Guidelines & Info](https://github.com/culturejam/management/wiki/Info)
+    * [Git Guidelines](https://github.com/culturejam/management/wiki/Git-Guidelines)
+    * [Ruby Guidelines](https://github.com/culturejam/management/wiki/Ruby-Guidlines)
+    * [JS Guidelines](https://github.com/culturejam/management/wiki/JS-Guidelines)
+    * [CSS Guidelines](https://github.com/culturejam/management/wiki/CSS-Guidelines)
+
+---
+
+* [Frequenty Asked Questions](https://github.com/culturejam/management/wiki/Developer-FAQ)
+
+
+Form-Shui Details
+===================
+
+## Requirements
+
 * Ruby ~> 1.9.2
 
 
