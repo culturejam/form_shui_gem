@@ -3,16 +3,17 @@ module FormShui
   module Mapper
     def self.included(base)
       base.send :extend, ClassMethods
-      base.send :include, InstanceMethods
     end
 
     module ClassMethods
       def all(options = {})
-        if @@prefix
-          prefix_id = options.delete(@@prefix.to_sym)
+        if prefix
+          prefix_id = options.delete(prefix.to_sym)
           path = compile_path(prefix_id)
         end
-        path ||= @@path
+
+        path ||= self.path
+
         response = FormShui.api_connection.get path, options
         parse_doc(response.body)
       end
@@ -21,11 +22,11 @@ module FormShui
         id = arguments.slice!(0)
         options = arguments.slice!(0) || {}
 
-        if @@prefix
-          prefix_id = options.delete(:prefix)[@@prefix.to_sym]
+        if prefix
+          prefix_id = options.delete(:prefix)[prefix.to_sym]
           path = "#{compile_path(prefix_id)}/#{id}"
         else
-          path = "#{@@path}/#{id}"
+          path = "#{self.path}/#{id}"
         end
 
         response = FormShui.api_connection.get path, options
@@ -33,43 +34,35 @@ module FormShui
       end
 
       def create(attrs = {})
-        if @@prefix
-          prefix_id = attrs.delete(:prefix)[@@prefix.to_sym]
+        if prefix
+          prefix_id = attrs.delete(:prefix)[prefix.to_sym]
           path = compile_path(prefix_id)
         end
-        path ||= @@path
+
+        path ||= self.path
+
         response = FormShui.api_connection.post path do |request|
           request.headers['Content-Type'] = 'application/json'
-          request.body = { @@root => attrs }.to_json
+          request.body = { root => attrs }.to_json
         end
         parse_doc(response.body)
       end
 
       def root_param(root_param)
-        @@root = root_param
+        self.root = root_param
       end
 
       def path_name(path)
-        @@path = path
-        @@prefix = path.match(/(:\w+)/).to_s[1..-1]
+        self.path   = path
+        self.prefix = path.match(/(:\w+)/).to_s[1..-1]
       end
 
-      def path
-        @@path
-      end
-
-      def prefix
-        @@prefix
-      end
-
-      def root
-        @@root
-      end
+      attr_accessor :prefix, :path, :root
 
       private
 
       def compile_path(prefix_id)
-        @@path.gsub(/(:\w+)/, prefix_id.to_s)
+        path.gsub(/(:\w+)/, prefix_id.to_s)
       end
 
       def parse_doc(body)
@@ -82,31 +75,28 @@ module FormShui
       end
     end
 
-    module InstanceMethods
-
-      def path
-        if self.class.prefix
-          path_name = self.class.path.gsub(/(:\w+)/, self.send(self.class.prefix))
-          "#{path_name}/#{id}"
-        else
-          "#{self.class.path}/#{id}"
-        end
-      end
-
-      def update(attrs = {})
-        response = FormShui.api_connection.put self.path do |request|
-          request.headers['Content-Type'] = 'application/json'
-          request.body = { self.class.root => attrs }.to_json
-        end
-        doc = JSON.parse(response.body)
-        self.marshal_load(doc)
-        self
-      end
-
-      def destroy
-        response = FormShui.api_connection.delete self.path
+    def path
+      if self.class.prefix
+        path_name = self.class.path.gsub(/(:\w+)/, self.send(self.class.prefix))
+        "#{path_name}/#{id}"
+      else
+        "#{self.class.path}/#{id}"
       end
     end
-  end
 
+    def update(attrs = {})
+      response = FormShui.api_connection.put self.path do |request|
+        request.headers['Content-Type'] = 'application/json'
+        request.body = { self.class.root => attrs }.to_json
+      end
+      doc = JSON.parse(response.body)
+      self.marshal_load(doc)
+      self
+    end
+
+    def destroy
+      response = FormShui.api_connection.delete self.path
+    end
+
+  end
 end
