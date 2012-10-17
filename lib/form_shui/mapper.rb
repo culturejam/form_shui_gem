@@ -8,7 +8,7 @@ module FormShui
     module ClassMethods
       def all(options = {})
         if prefix
-          prefix_id = options.delete(prefix.to_sym)
+          prefix_id = options.delete(:prefix)[prefix.to_sym]
           path = compile_path(prefix_id)
         end
 
