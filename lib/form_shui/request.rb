@@ -27,7 +27,8 @@ module FormShui
     private
 
     def send_json_requeset(method, path, body)
-      connection.send(method, path, 'content-type' => 'application/json') do |request|
+      connection.send(method, path) do |request|
+        request.headers['Content-Type'] = 'application/json'
         request.body = body
       end
     end
