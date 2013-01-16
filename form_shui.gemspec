@@ -5,7 +5,7 @@ Gem::Specification.new do |gem|
   gem.authors       = ["robertomiranda", "CultureJam Inc."]
   gem.email         = ["rjmaltamar@gmail.com"]
   gem.description   = %q{A Gem for form_shui API}
-  gem.summary   = %q{Gem for form_shui API}
+  gem.summary       = %q{Gem for form_shui API}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($\)
