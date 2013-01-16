@@ -16,6 +16,9 @@ RSpec.configure do |config|
   config.include WebMock::API
 end
 
+FormShui.config.hmac_access_id = "access_id"
+FormShui.config.hmac_secret = "secret"
+
 def a_delete(path)
   a_request(:delete, FormShui.api_url + path)
 end

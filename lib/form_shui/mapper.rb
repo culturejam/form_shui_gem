@@ -35,7 +35,7 @@ module FormShui
       end
 
       def request
-        @_request ||= FormShui::Request.new(FormShui.api_connection)
+        @_request ||= FormShui::Request.new(FormShui.api_connection, FormShui.config)
       end
 
       attr_reader :root
