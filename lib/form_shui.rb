@@ -1,7 +1,6 @@
 $:.push File.dirname(__FILE__)
 
-require 'active_support/core_ext/object'
-
+require "form_shui/core_ext"
 require "form_shui/version"
 require "form_shui/error"
 
