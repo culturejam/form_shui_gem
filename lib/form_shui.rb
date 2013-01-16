@@ -1,4 +1,4 @@
-$:.push File.dirname(__FILE__)
+$:.unshift File.dirname(__FILE__)
 
 require "form_shui/core_ext"
 require "form_shui/version"
