@@ -1,4 +1,5 @@
 require "spec_helper"
+
 describe FormShui::Form do
 
   describe "with an existing form" do
@@ -7,6 +8,7 @@ describe FormShui::Form do
         to_return(:body => fixture("form.json"))
       @form = FormShui::Form.find(4)
     end
+
     it "should get the correct resource" do
       a_get("/forms/4").should have_been_made
     end
@@ -34,6 +36,7 @@ describe FormShui::Form do
 
     it "should create a new Form" do
       @form.promotion_id == "1"
+      @form.should be_an_instance_of(FormShui::Form)
     end
 
     it "should return the new form when successful" do
