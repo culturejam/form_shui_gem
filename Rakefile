@@ -1,7 +1,10 @@
 #!/usr/bin/env rake
-require "bundler/gem_tasks"
+
+require "rubygems"
+require "bundler/setup"
 require 'rspec/core/rake_task'
-Bundler::GemHelper.install_tasks
+
+task default: [:spec]
 
 task :spec do
   desc "Run all specs with rcov"
@@ -12,5 +15,5 @@ end
 
 task :console do
   puts "Loading development console..."
-  system("irb -r form_shui")
+  system("irb -r ./lib/form_shui")
 end
