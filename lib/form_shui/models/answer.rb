@@ -8,6 +8,11 @@ module FormShui
       response.body
     end
 
+    def self.get_one_answer(form_id, form_answer_index)
+      response = request.get("/forms/#{form_id}/answers_by_index/#{form_answer_index}", nil)
+      response.body
+    end
+
     def self.get(*args)
       form_id = args[0]
       page = args[1]
