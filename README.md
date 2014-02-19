@@ -91,6 +91,11 @@ form.find_by_organization_id(1)
 # get /promotions/1/forms
 form.find_by_promotion_id(1)
 
+# returns a hash of form field registry attributes
+# {"_firstname":"First Name","_lastname":"Last Name","_emailaddress":"Email Address "}
+# get /forms/50211c30701fe72827000001/field_registry
+form.find_form_columns_by_form_id("50211c30701fe72827000001")
+
 # create a answer with FORM_ID = 50211c30701fe72827000001
 # post /forms/50211c30701fe72827000001/answers
 FormShui::Answer.create({:prefix => {:form_id => "50211c30701fe72827000001"}, attrs })
