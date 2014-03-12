@@ -2,8 +2,8 @@
 require File.expand_path('../lib/form_shui/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.authors       = ["robertomiranda", "CultureJam Inc."]
-  gem.email         = ["rjmaltamar@gmail.com"]
+  gem.authors       = ["bryanbcabalo", "robertomiranda", "CultureJam Inc."]
+  gem.email         = ["bcabalo@gmail.com", "rjmaltamar@gmail.com"]
   gem.description   = %q{A Gem for form_shui API}
   gem.summary       = %q{Gem for form_shui API}
   gem.homepage      = ""

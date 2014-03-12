@@ -21,6 +21,10 @@ module FormShui
       send_json_requeset(:put, path, body)
     end
 
+    def patch(path, body)
+      send_json_requeset(:patch, path, body)
+    end
+
     def delete(path)
       connection.delete(path)
     end
