@@ -1,0 +1,4 @@
+[
+  {"id":"2", "name":"email", "events":"submit_answer", "active":"true", "config":{"address":"bcabalo@gmail.com"} },
+  {"id":"3", "name":"email", "events":"submit_answer", "active":"false", "config":{"address":"bcabalo+jwang@gmail.com"} }
+]
