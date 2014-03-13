@@ -31,7 +31,7 @@ describe FormShui::Hook do
   end
 
   before do
-    stub_get("/form/1/hooks/2").
+    stub_get("/hooks/2").
       to_return(:body => fixture("hook.json"))
   end
 
@@ -40,10 +40,10 @@ describe FormShui::Hook do
       form_id = 1
       hook_id = 2
 
-      response = FormShui::Hook.get_hook(form_id, hook_id)
+      response = FormShui::Hook.get(hook_id)
       response = JSON.parse(response)
 
-      a_get("/form/1/hooks/2").should have_been_made
+      a_get("/hooks/2").should have_been_made
       response["id"].should eq("2")
       response["name"].should eq("email")
       response["events"].should eq("submit_answer")
@@ -52,7 +52,7 @@ describe FormShui::Hook do
   end
 
   before do
-    stub_request(:patch, "http://promojam.dev:4567/form/1/hooks/2").
+    stub_request(:patch, "http://promojam.dev:4567/hooks/2").
       to_return(:body => fixture("hook.json"))
   end
 
@@ -69,7 +69,7 @@ describe FormShui::Hook do
       form_id = 1
       hook_id = 2
 
-      response = FormShui::Hook.patch(form_id, hook_id, update_params_list)
+      response = FormShui::Hook.patch(hook_id, update_params_list)
       response = JSON.parse(response)
 
       response["active"].should eq("true")
@@ -78,7 +78,7 @@ describe FormShui::Hook do
   end
 
   before do
-    stub_delete("/form/1/hooks/2").
+    stub_delete("/hooks/2").
       to_return(:body => nil)
   end
 
@@ -87,9 +87,9 @@ describe FormShui::Hook do
       form_id = 1
       hook_id = 2
 
-      response = FormShui::Hook.delete(form_id, hook_id)
+      response = FormShui::Hook.delete(hook_id)
 
-      a_delete("/form/1/hooks/2").should have_been_made
+      a_delete("/hooks/2").should have_been_made
       response.should eq(nil)
     end
   end
@@ -104,7 +104,7 @@ describe FormShui::Hook do
       form_id = 1
       hook_id = 2
 
-      response = FormShui::Hook.get_all_hooks(form_id)
+      response = FormShui::Hook.list(form_id)
       response = JSON.parse(response)
 
       a_get("/form/1/hooks").should have_been_made

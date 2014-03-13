@@ -4,13 +4,13 @@ module FormShui
     root_param "hook"
 
     class << self
-      def get_all_hooks(form_id)
+      def list(form_id)
         response = request.get("/form/#{form_id}/hooks", nil)
         response.body
       end
 
-      def get_hook(form_id, hook_id)
-        response = request.get("/form/#{form_id}/hooks/#{hook_id}", nil)
+      def get(hook_id)
+        response = request.get("/hooks/#{hook_id}", nil)
         response.body
       end
 
@@ -19,13 +19,13 @@ module FormShui
         response.body
       end
 
-      def patch(form_id, hook_id, params_list)
-        response = request.patch("/form/#{form_id}/hooks/#{hook_id}", params_list)
+      def patch(hook_id, params_list)
+        response = request.patch("/hooks/#{hook_id}", params_list)
         response.body
       end
 
-      def delete(form_id, hook_id)
-        response = request.delete("/form/#{form_id}/hooks/#{hook_id}")
+      def delete(hook_id)
+        response = request.delete("/hooks/#{hook_id}")
         response.body
       end
 

@@ -14,15 +14,15 @@ module FormShui
     end
 
     def post(path, body)
-      send_json_requeset(:post, path, body)
+      send_json_request(:post, path, body)
     end
 
     def put(path, body)
-      send_json_requeset(:put, path, body)
+      send_json_request(:put, path, body)
     end
 
     def patch(path, body)
-      send_json_requeset(:patch, path, body)
+      send_json_request(:patch, path, body)
     end
 
     def delete(path)
@@ -37,7 +37,7 @@ module FormShui
         if @config.hmac_access_id.blank? || @config.hmac_secret.blank?
     end
 
-    def send_json_requeset(method, path, body)
+    def send_json_request(method, path, body)
       connection.send(method, path) do |request|
         request.headers['Content-Type'] = 'application/json'
         request.body = body
