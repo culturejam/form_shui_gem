@@ -59,6 +59,54 @@ Or install it yourself as:
     $ gem install form_shui
 
 
+## Local Script Usage
+  $ gem build form_shui.gemspec
+  
+    This generates a file form_shui-0.0.3.gem
+    
+  $ sudo gem install form_shui
+  
+    Installs gem locally for script usage
+
+Sample script
+  
+```ruby
+
+require 'form_shui'
+
+require 'json'
+
+require 'Time'
+
+FormShui.config.hmac_access_id = put_heroku_config_access_id_here
+
+FormShui.config.hmac_secret = put_heroku_config_hmac_here
+
+FormShui.api_url = "http://forms.cobrajam.com"
+
+```
+  
+$ irb
+
+`irb` test commands
+
+```ruby
+
+params_list = {"name"=>"email", "events"=>"submit_answer", "active"=>"true", "config"=>{"address"=>"bcabalo@gmail.com"} }.to_json
+
+FormShui::Hook.get_all_hooks(1)
+
+FormShui::Hook.get_hook(1, "5320d923db08870002000001”)
+
+FormShui::Hook.post(1, params_list)
+
+FormShui::Hook.patch(1, "531e6103701fe760b0000002", params_list)
+
+FormShui::Hook.delete(1, "5320dad0db08870002000002")
+
+```
+  
+
 ## Usage
 
 
