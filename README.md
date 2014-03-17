@@ -92,17 +92,17 @@ $ irb
 
 ```ruby
 
-params_list = {"name"=>"email", "events"=>"submit_answer", "active"=>"true", "config"=>{"address"=>"bcabalo@gmail.com"} }.to_json
+params_list = {"name"=>"email", "events"=>["answer_submit"], "active"=>"true", "config"=>{"address"=>"bcabalo@gmail.com"} }.to_json
 
-FormShui::Hook.get_all_hooks(1)
+FormShui::Hook.list(1)
 
-FormShui::Hook.get_hook(1, "5320d923db08870002000001”)
+FormShui::Hook.get("5320d923db08870002000001")
 
 FormShui::Hook.post(1, params_list)
 
-FormShui::Hook.patch(1, "531e6103701fe760b0000002", params_list)
+FormShui::Hook.patch("531e6103701fe760b0000002", params_list)
 
-FormShui::Hook.delete(1, "5320dad0db08870002000002")
+FormShui::Hook.delete("5320dad0db08870002000002")
 
 ```
   
