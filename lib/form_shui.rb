@@ -14,6 +14,7 @@ module FormShui
   autoload :Base,       'form_shui/base'
   autoload :Form,       'form_shui/models/form'
   autoload :Answer,     'form_shui/models/answer'
+  autoload :Hook,       'form_shui/models/hook'
 
   extend Connection
 
