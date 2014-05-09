@@ -14,6 +14,8 @@ module FormShui
             raise FormShui::ForbiddenAccess, error_message_400(response)
           when 404
             raise FormShui::NotFound, error_message_400(response)
+          when 422
+            raise FormShui::UnprocessableEntity, error_message_400(response)
           when 500
             raise FormShui::InternalServerError, error_message_500(response, "Something is technically wrong.")
           when 503

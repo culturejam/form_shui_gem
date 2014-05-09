@@ -1,36 +1,12 @@
 module FormShui
-  class FormShuiError < StandardError
-  end
-
-  # 400 Bad Request
-  class BadRequest < FormShuiError
-  end
-
-  # 401 Unauthorized
-  class UnauthorizedAccess < FormShuiError
-  end
-
-  # 403 Forbidden
-  class ForbiddenAccess < FormShuiError
-  end
-
-  # 404 Not Found
-  class NotFound < FormShuiError
-  end
-
-  # 409 Conflict
-  class ResourceConflict < FormShuiError
-  end
-
-  # 410 Gone
-  class ResourceGone < FormShuiError
-  end
-
-  # 500 Server Error
-  class InternalServerError < FormShuiError
-  end
-
-  # 503 Server Error
-  class ServiceUnavailable < FormShuiError
-  end
+  class FormShuiError < StandardError;       end
+  class BadRequest < FormShuiError;          end # 400 Bad Request
+  class UnauthorizedAccess < FormShuiError;  end # 401 Unauthorized
+  class ForbiddenAccess < FormShuiError;     end # 403 Forbidden
+  class NotFound < FormShuiError;            end # 404 Not Found
+  class ResourceConflict < FormShuiError;    end # 409 Conflict
+  class ResourceGone < FormShuiError;        end # 410 Gone
+  class UnprocessableEntity < FormShuiError; end # 422 Unprocessable Entity
+  class InternalServerError < FormShuiError; end # 500 Server Error
+  class ServiceUnavailable < FormShuiError;  end # 503 Server Error
 end
