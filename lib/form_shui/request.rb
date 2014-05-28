@@ -26,7 +26,9 @@ module FormShui
     end
 
     def delete(path)
-      connection.delete(path)
+      connection.delete(path) do |request|
+        request.sign! @config.hmac_access_id, @config.hmac_secret
+      end
     end
 
     private
