@@ -185,4 +185,4 @@ Running development console
     
 Build and install form_shui-*.gem into system gems 
 
-    $ bundle exec rake install  
+    $ bundle exec rake install
