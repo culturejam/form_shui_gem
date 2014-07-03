@@ -13,19 +13,9 @@ module FormShui
       response.body
     end
 
-    def self.get(*args)
-      form_id = args[0]
-      page = args[1]
-      per_page = args[2]
-      sort_by = args[3]
-      order = args[4]
+    def self.get(form_id, *args)
       options_hash = args.last.is_a?(Hash) ? args.pop : {}
-
-      response = request.get(
-        "/forms/#{form_id}/answers?page=#{page}&per_page=#{per_page}" \
-        "&sort_by=#{sort_by}&sort_order=#{order}", nil
-      )
-
+      response = request.get("/forms/#{form_id}/answers", options_hash)
       response.body
     end
   end
