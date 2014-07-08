@@ -7,13 +7,10 @@ module FormShui
       validate_config!
     end
 
-    def get(path, options, params={})
+    def get(path, options, parameters={})
       connection.get(path, options) do |request|
         request.sign! @config.hmac_access_id, @config.hmac_secret
-
-        params.each do |key, value|
-          request.params[key] = value
-        end
+        request.params = parameters
       end
     end
 
