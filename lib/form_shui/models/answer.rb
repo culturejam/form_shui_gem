@@ -14,8 +14,8 @@ module FormShui
     end
 
     def self.get(form_id, *args)
-      options_hash = args.last.is_a?(Hash) ? args.pop : {}
-      response = request.get("/forms/#{form_id}/answers", options_hash)
+      params = args.last.is_a?(Hash) ? args.pop : {}
+      response = request.get("/forms/#{form_id}/answers", nil, params)
       response.body
     end
   end
