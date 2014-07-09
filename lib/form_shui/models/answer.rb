@@ -13,16 +13,8 @@ module FormShui
       response.body
     end
 
-    def self.get(*args)
-      form_id = args[0]
-      page = args[1]
-      per_page = args[2]
-      options_hash = args.last.is_a?(Hash) ? args.pop : {}
-
-      response = request.get(
-        "/forms/#{form_id}/answers?page=#{page}&per_page=#{per_page}", nil
-      )
-
+    def self.get(form_id, parameters)
+      response = request.get("/forms/#{form_id}/answers", nil, parameters)
       response.body
     end
   end
