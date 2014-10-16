@@ -52,119 +52,105 @@ Add this line to your application's Gemfile:
 
 And then execute:
 
-    $ bundle
+    $> bundle
 
 Or install it yourself as:
 
-    $ gem install form_shui
+    $> gem install form_shui
 
-
-## Local Script Usage
-  $ gem build form_shui.gemspec
-  
-    This generates a file form_shui-0.0.3.gem
-    
-  $ sudo gem install form_shui
-  
-    Installs gem locally for script usage
-
-Sample script
-  
-```ruby
-
-require 'form_shui'
-
-require 'json'
-
-require 'Time'
-
-FormShui.config.hmac_access_id = put_heroku_config_access_id_here
-
-FormShui.config.hmac_secret = put_heroku_config_hmac_here
-
-FormShui.api_url = "http://forms.cobrajam.com"
-
-```
-  
-$ irb
-
-`irb` test commands
-
-```ruby
-
-params_list = {"name"=>"email", "events"=>["answer_submit"], "active"=>"true", "config"=>{"address"=>"bcabalo@gmail.com"} }.to_json
-
-FormShui::Hook.list(1)
-
-FormShui::Hook.get("5320d923db08870002000001")
-
-FormShui::Hook.post(1, params_list)
-
-FormShui::Hook.patch("531e6103701fe760b0000002", params_list)
-
-FormShui::Hook.delete("5320dad0db08870002000002")
-
-```
-  
 
 ## Usage
 
+Configure the FormShui client:
 
 ```ruby
 require 'form_shui'
-# Setup api_url
-FormShui.api_url = "http://promojam.dev:4567"
 
-# create a form
-# post /forms
-form = FormShui::Form.create({:promotion_id => 3, :organization_id=>1, :structure => {}})
-
-# returns the Form for ID = "502139a9701fe72e11000004"
-# get /forms/502139a9701fe72e11000004
-form = FormShui:Form.find("502139a9701fe72e11000004")
-
-# update the Form with the attributes specified as hash
-# put /forms/502139a9701fe72e11000004
-form.update({:promotion_id => "1"})
-
-# destroy the Form
-# delete /forms/502139a9701fe72e11000004
-form.destroy
-
-# returns a list of answers with organization_id = 1
-# get /organizations/1/forms
-form.find_by_organization_id(1)
-
-# returns a list of answers with promotion_id = 1
-# get /promotions/1/forms
-form.find_by_promotion_id(1)
-
-# returns a hash of form field registry attributes
-# {"_firstname":"First Name","_lastname":"Last Name","_emailaddress":"Email Address "}
-# get /forms/50211c30701fe72827000001/field_registry
-form.find_form_columns_by_form_id("50211c30701fe72827000001")
-
-# create a answer with FORM_ID = 50211c30701fe72827000001
-# post /forms/50211c30701fe72827000001/answers
-FormShui::Answer.create({:prefix => {:form_id => "50211c30701fe72827000001"}, attrs })
-
-# returns a list of answers with FORM_ID = 50211c30701fe72827000001
-# get /forms/50211c30701fe72827000001/answers
-answer = FormShui::Answer.all(:prefix => {:form_id => "50211c30701fe72827000001"})
- 
-# returns the Answer for ID = "50213046701fe72e11000002" and FORM_ID = 50211c30701fe72827000001
-# get /forms/50211c30701fe72827000001/answers/50213046701fe72e11000002
-answer = FormShui::Answer.find("50213046701fe72e11000002", :prefix => {:form_id => "50211c30701fe72827000001"})
-
-# update the Answer with the attributes specified as hash
-# put /forms/50213046701fe72e11000002/answers/50211c30701fe72827000001
-answer.update({:promotion_id => "1"})
-
-# destroy the Answer
-# delete /forms/50213046701fe72e11000002/answers/50211c30701fe72827000001
-answer.destroy
+# Configure connection
+FormShui.config.hmac_access_id = <access_id>
+FormShui.config.hmac_secret = <secret>
+FormShui.api_url = "http://localhost:4000"
 ```
 
+Forms:
+
+```ruby
+# Create a form
+form = FormShui::Form.create({
+  :promotion_id => 1,
+  :organization_id=>1,
+  :structure => {"form_options"=>"{\"name\":\"Demo Form\",\"columns\":1,\"size\":\"medium\",\"id\":\"form\",\"ref\":\"form\"}", "name"=>"New Form", "rows"=>[{"type"=>"widgets", "columns"=>[{"data"=>["{\"label\":\"Full Name \",\"value\":\"\",\"hint\":\"First name, Last name\",\"font\":\"default\",\"size\":\"medium\",\"bold\":false,\"italic\":false,\"underline\":false,\"required\":false,\"filter\":\"any\",\"labelColor\":\"default\",\"valueColor\":\"default\",\"hintColor\":\"default\",\"id\":\"name\",\"ref\":\"name_\",\"name\":\"full_name_\"}", "{\"label\":\"Email Address \",\"value\":\"\",\"hint\":\"\",\"font\":\"default\",\"size\":\"medium\",\"bold\":false,\"italic\":false,\"underline\":false,\"required\":false,\"filter\":\"email\",\"labelColor\":\"default\",\"valueColor\":\"default\",\"hintColor\":\"default\",\"id\":\"email\",\"ref\":\"email_\",\"name\":\"email_address_\"}", "{\"label\":\"\",\"value\":\"Submit\",\"hint\":\"\",\"font\":\"default\",\"size\":\"medium\",\"bold\":false,\"italic\":false,\"underline\":false,\"required\":false,\"filter\":\"button\",\"labelColor\":\"default\",\"valueColor\":\"default\",\"hintColor\":\"default\",\"id\":\"button\",\"ref\":\"button1\",\"name\":\"\"}"]}]}]}
+})
+
+# Get a form
+form = FormShui::Form.find(form.id)
+
+# Update a form
+# Updates MUST include all current and updated params!
+form.update({
+  :promotion_id => 3,
+  :organization_id=>1,
+  :structure => {"form_options"=>"{\"name\":\"Renamed Demo Form\",\"columns\":1,\"size\":\"medium\",\"id\":\"form\",\"ref\":\"form\"}", "name"=>"New Form", "rows"=>[{"type"=>"widgets", "columns"=>[{"data"=>["{\"label\":\"Full Name \",\"value\":\"\",\"hint\":\"First name, Last name\",\"font\":\"default\",\"size\":\"medium\",\"bold\":false,\"italic\":false,\"underline\":false,\"required\":false,\"filter\":\"any\",\"labelColor\":\"default\",\"valueColor\":\"default\",\"hintColor\":\"default\",\"id\":\"name\",\"ref\":\"name_\",\"name\":\"full_name_\"}", "{\"label\":\"Email Address \",\"value\":\"\",\"hint\":\"\",\"font\":\"default\",\"size\":\"medium\",\"bold\":false,\"italic\":false,\"underline\":false,\"required\":false,\"filter\":\"email\",\"labelColor\":\"default\",\"valueColor\":\"default\",\"hintColor\":\"default\",\"id\":\"email\",\"ref\":\"email_\",\"name\":\"email_address_\"}", "{\"label\":\"\",\"value\":\"Submit\",\"hint\":\"\",\"font\":\"default\",\"size\":\"medium\",\"bold\":false,\"italic\":false,\"underline\":false,\"required\":false,\"filter\":\"button\",\"labelColor\":\"default\",\"valueColor\":\"default\",\"hintColor\":\"default\",\"id\":\"button\",\"ref\":\"button1\",\"name\":\"\"}"]}]}]}
+})
+```
+
+Answers:
+
+```ruby
+# Get answers
+answers = FormShui::Answer.all(:prefix => {:form_id => "50211c30701fe72827000001"})
+
+# Create an answer
+answer = FormShui::Answer.create({
+  :prefix => {:form_id => "form_id"},
+  attrs
+})
+```
+
+Hooks (untested examples):
+
+```ruby
+# Hook Examples
+hook_params = {
+  "name"=>"email",
+  "events"=>["answer_submit"],
+  "active"=>"true",
+  "config"=>{"address"=>"user@example.com"}
+}.to_json
+
+FormShui::Hook.list(form.id)
+FormShui::Hook.post(form.id, hook_params)
+FormShui::Hook.get("5320d923db08870002000001")
+FormShui::Hook.patch("531e6103701fe760b0000002", hook_params)
+FormShui::Hook.delete("5320dad0db08870002000002")
+```
+
+## Local Development
+
+Build and install the gem locally:
+
+```sh
+$> gem build form_shui.gemspec # Generate gem file
+$> gem install form_shui       # Install gem locally
+```
+
+Running development console:
+
+```sh
+$> bundle exec rake console
+```
+
+Build and install form_shui-*.gem into system gems:
+
+```sh
+$> bundle exec rake install
+```
+
+## Running Tests
+
+```sh
+$> bundle exec rake spec
+```
 
 ## Contributing
 
@@ -173,16 +159,3 @@ answer.destroy
 3. Commit your changes (`git commit -am 'Added some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
-
-
-Runing tests:
-
-    $ bundle exec rake spec
-    
-Running development console
-
-    $ bundle exec rake console
-    
-Build and install form_shui-*.gem into system gems 
-
-    $ bundle exec rake install
