@@ -21,12 +21,13 @@ describe FormShui::Connection do
   end
 
   describe "#api_connection" do
+    let(:options){ { url: @obj.api_url, ssl: { version: :TLSv1 } } }
 
     it "should create and cache a faraday connection" do
       conn = double(:connection)
-      Faraday.should_receive(:new).with(url: @obj.api_url).and_return(conn)
+      Faraday.should_receive(:new).with(options).and_return(conn)
       @obj.api_connection.should == conn
-      Faraday.should_not_receive(:new).with(@obj.api_url)
+      Faraday.should_not_receive(:new).with(options)
       @obj.api_connection
     end
 
