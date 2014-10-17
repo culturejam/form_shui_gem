@@ -13,7 +13,7 @@ module FormShui
     end
 
     def api_connection
-      @api_connection ||= Faraday.new(url: api_url) do |faraday|
+      @api_connection ||= Faraday.new(url: api_url, ssl: { version: :TLSv1 }) do |faraday|
         faraday.request  :url_encoded             # form-encode POST params
         faraday.request  :auth_hmac               # enables request signing
         faraday.response :raise_error
